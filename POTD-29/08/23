@@ -1,0 +1,44 @@
+class Solution{
+ Node compute(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        Node reversed = reverseList(head); // Reverse the linked list
+        Node temp = reversed;
+        int max = temp.data;
+
+        while (temp != null && temp.next != null) {
+            if (temp.next.data < max) {
+                temp.next = temp.next.next; // Delete node
+            } else {
+                max = temp.next.data; // Update max value
+                temp = temp.next; // Move to the next node
+            }
+        }
+
+        return reverseList(reversed); // Reverse the list back to the original order
+    }
+
+    Node reverseList(Node head) {
+        Node prev = null;
+        Node current = head;
+        Node next = null;
+
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        return prev;
+    }
+                
+                
+}            
+                
+                
+                
+                
+   
