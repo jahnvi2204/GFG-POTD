@@ -11,11 +11,10 @@ class Solution {
             adj.get(u).add(v);
             adj.get(v).add(u);
         }
-        int m = edges.length;
         boolean[]vis = new boolean[V];
         for(int i=0;i<V;i++){
             if(!vis[i]){
-                if(detect(i,V,adj,vis)) return true;
+                if(dfs(i,-1,adj,vis)) return true;
                 
             }
         }
@@ -23,24 +22,17 @@ class Solution {
     
         
     }
-    public boolean detect(int src ,int V,ArrayList<ArrayList<Integer>> adj , boolean[]vis){
+    public boolean dfs(int src , int parent ,ArrayList<ArrayList<Integer>> adj , boolean[]vis){
         vis[src]=true;
-        Queue<int[]> q = new LinkedList<>();
-        q.add(new int[]{src,-1});
-        while(!q.isEmpty()){
-            int[] nodePair = q.poll();  
-            int first = nodePair[0];
-            int second = nodePair[1]; 
-           
-            for(int adjnode : adj.get(first)){
-                if(!vis[adjnode]){
-                    vis[adjnode]=true;
-                    q.add(new int[]{adjnode,first});
-                }
-                else if(adjnode!=second) return true;
+        for(int node : adj.get(src)){
+            if(!vis[node]){
+                if(dfs(node,src,adj,vis)) return true;
+                
             }
+            else if(node!=parent) return true;
         }
         return false;
     }
+    
     
 }
